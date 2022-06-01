@@ -1,0 +1,7 @@
+name: unary addition
+source code: "\r\n  input: '111+11'\r\n  blank: ' '\r\n  start state: replace_plus\r\n  table:\r\n    replace_plus:\r\n      1: R\r\n      '+': {write: 1, R: find_end}\r\n    find_end:\r\n      1: R\r\n      ' ': {L : delete_last_one}\r\n    delete_last_one:\r\n      1: {write : ' ', L: done}\r\n    done:"
+positions:
+  replace_plus: {x: 302.18, y: 298.96, fixed: false}
+  find_end: {x: 350.94, y: 165.19, fixed: false}
+  delete_last_one: {x: 459.77, y: 257.11, fixed: false}
+  done: {x: 605.95, y: 268.88}

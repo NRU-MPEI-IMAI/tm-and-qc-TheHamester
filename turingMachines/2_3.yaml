@@ -1,0 +1,29 @@
+name: smaller word
+source code: "input: '1010 010 01 000'\r\nblank: ' '\r\nstart state: first_word\r\ntable:\r\n  first_word:\r\n    0: {write: a, R: to_second}\r\n    1: {write: b, R: to_second}\r\n    [a, b]: R\r\n    ' ': {L: first_is_smaller}\r\n  to_second:\r\n    [0, 1]: R\r\n    ' ': {R: second_word}\r\n  second_word:\r\n    ' ': {L: one_left}\r\n    0: {write: a, L: to_first}\r\n    1: {write: b, L: to_first}\r\n    [a, b]: {R: second_not_null}\r\n  second_not_null:\r\n    [a, b]: R\r\n    0: {write: a, L: to_first}\r\n    1: {write: b, L: to_first}\r\n    ' ': {L: second_is_smaller}\r\n  to_first:\r\n    [a, b]: L\r\n    ' ': {L: to_begin_first}\r\n  to_begin_first:\r\n    [0, 1, a, b]: L\r\n    ' ': {R: first_word}\r\n  one_left:\r\n    ' ': {L: restore_and_exit}\r\n  restore_and_exit:\r\n    a: {write: 0, L}\r\n    b: {write: 1, L}\r\n    [0, 1]: L\r\n    ' ': {R: done}\r\n  first_is_smaller:\r\n    [a, b]: L\r\n    ' ': {R: restore_first}\r\n  restore_first:\r\n    a: {write: 0, R}\r\n    b: {write: 1, R}\r\n    ' ': {R: cut_second}\r\n  cut_second:\r\n    [a, b, 0, 1]: {write: a, R}\r\n    ' ': {L: return_and_copy}\r\n  return_and_copy:\r\n    a: L\r\n    ' ': {L: copy_first}\r\n  copy_first:\r\n    [a, b]: L\r\n    0: {write: a, R: carry0}\r\n    1: {write: b, R: carry1}\r\n    ' ': {R: delete_to_word}\r\n  carry0:\r\n    [a, b]: R\r\n    ' ': {R: carry0_in_second}\r\n  carry0_in_second:\r\n    a: R\r\n    [0, 1, ' ']: {L: set0_and_return}\r\n  set0_and_return:\r\n    a: {write: 0, L: return_and_copy}\r\n    ' ': {L: return_and_copy}\r\n  carry1:\r\n    [a, b]: R\r\n    ' ': {R: carry1_in_second}\r\n  carry1_in_second:\r\n    a: R\r\n    [0, 1, ' ']: {L: set1_and_return}\r\n  set1_and_return:\r\n    a: {write: 1, L: return_and_copy}\r\n    ' ': {L: return_and_copy}\r\n  delete_to_word:\r\n    [a, b]: {write: ' ', R}\r\n    [0, 1]: {L: to_begin_first}\r\n    ' ': {R: delete_to_word_in_sec}\r\n  delete_to_word_in_sec:\r\n    [a, b]: {write: ' ', R}\r\n    [0, 1]: {L: to_begin_first}\r\n    ' ': {R: done}\r\n  second_is_smaller:\r\n    [a, b]: L\r\n    ' ': {L: to_begin_first_and_del}\r\n  to_begin_first_and_del:\r\n    [0, 1, a, b]: L\r\n    ' ': {R: delete_first}\r\n  delete_first:\r\n    [0, 1, a, b]: {write: ' ', R}\r\n    ' ': {R: restore_second}\r\n  restore_second:\r\n    a: {write: 0, R}\r\n    b: {write: 1, R}\r\n    ' ': {L: to_begin_first}\r\n  done:"
+positions:
+  first_word: {x: 324.01, y: 40.16, fixed: false}
+  to_second: {x: 479.03, y: 62.93, fixed: false}
+  second_word: {x: 591.43, y: 194.75, fixed: false}
+  second_not_null: {x: 641.17, y: 351.55, fixed: false}
+  to_first: {x: 502.59, y: 310.45, fixed: false}
+  to_begin_first: {x: 417.29, y: 173.71, fixed: false}
+  one_left: {x: 561.1, y: 25.1, fixed: false}
+  restore_and_exit: {x: 673.98, y: 84.92, fixed: false}
+  first_is_smaller: {x: 179.43, y: 82.45, fixed: false}
+  restore_first: {x: 257.58, y: 225.33, fixed: false}
+  cut_second: {x: 365, y: 345.47, fixed: false}
+  return_and_copy: {x: 235.88, y: 389.6, fixed: false}
+  copy_first: {x: 153.9, y: 265.15, fixed: false}
+  carry0: {x: 81.99, y: 404.41, fixed: false}
+  carry0_in_second: {x: 214.85, y: 480, fixed: false}
+  set0_and_return: {x: 356.74, y: 480, fixed: false}
+  carry1: {x: 148.68, y: 419.39, fixed: false}
+  carry1_in_second: {x: 20, y: 480, fixed: false}
+  set1_and_return: {x: 84.73, y: 344.84, fixed: false}
+  delete_to_word: {x: 266.37, y: 142.34, fixed: false}
+  delete_to_word_in_sec: {x: 391.1, y: 43.94, fixed: false}
+  second_is_smaller: {x: 754.53, y: 443.48, fixed: false}
+  to_begin_first_and_del: {x: 780, y: 298.79, fixed: false}
+  delete_first: {x: 739.74, y: 154.98, fixed: false}
+  restore_second: {x: 578.44, y: 123.42, fixed: false}
+  done: {x: 520, y: 190}

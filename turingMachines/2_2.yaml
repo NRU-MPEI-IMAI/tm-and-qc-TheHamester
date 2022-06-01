@@ -1,0 +1,16 @@
+name: bracket sequences
+source code: "input: '([({})])({[]}){}'\r\nblank: ' '\r\nstart state: left\r\ntable:\r\n  left:\r\n    ' ': {L: to_begin}\r\n    a: R\r\n    ['(','[','{']: {R: left_next}\r\n    ')': {write: a, L: right_p}\r\n    ']': {write: a, L: right_br}\r\n    '}': {write: a, L: right_curl}\r\n\r\n  left_next:\r\n    ' ': {L: fail}\r\n    a: R\r\n    ['(','[','{']: R\r\n    ')': {write: a, L: right_p}\r\n    ']': {write: a, L: right_br}\r\n    '}': {write: a, L: right_curl}\r\n\r\n  right_p:\r\n    a: L\r\n    '(': {write: a, L: try_left}\r\n    ['{', '[']: {write: a, L: fail}\r\n    ' ': {R: fail}\r\n\r\n  right_br:\r\n    a: L\r\n    '[': {write: a, L: try_left}\r\n    ['{', '(']: {write: a, L: fail}\r\n    ' ': {R: fail}\r\n\r\n  right_curl:\r\n    a: L\r\n    '{': {write: a, L: try_left}\r\n    ['(', '[']: {write: a, L: fail}\r\n    ' ': {R: fail}\r\n\r\n  try_left:\r\n    ' ': {R: left}\r\n    [a, '{', '[', '(']: {R: back_to_left}\r\n\r\n  back_to_left:\r\n    a: {L: left}\r\n    ' ': L\r\n\r\n  to_begin:\r\n    ' ': {R: success}\r\n    a: L\r\n    ['{', '[', '(']: {L: try_left}\r\n\r\n  success:\r\n    [a, ' ']: {write: d, R: to_end}\r\n\r\n  to_end:\r\n    [a, '{', '[', '(', '}', ']', ')']: R\r\n    ' ': {L: clear}\r\n\r\n  clear: \r\n    [a, '{', '[', '(', '}', ']', ')']: {write: ' ', L}\r\n    d: L\r\n    ' ': {R: done}\r\n\r\n  fail:\r\n    [a, '{', '[', '(', '}', ']', ')', ' ']: {R: to_end}\r\n\r\n  done:\r\n    ' ': {write: f, R: back_to_left}"
+positions:
+  left: {x: 258.15, y: 103.48, fixed: false}
+  left_next: {x: 296.12, y: 235.24, fixed: false}
+  right_p: {x: 176.79, y: 260.42, fixed: false}
+  right_br: {x: 168.26, y: 219.93, fixed: false}
+  right_curl: {x: 413.12, y: 187.3, fixed: false}
+  try_left: {x: 305.29, y: 202.39, fixed: false}
+  back_to_left: {x: 396.25, y: 67.32, fixed: false}
+  to_begin: {x: 414.99, y: 114.85, fixed: false}
+  success: {x: 473.76, y: 267.6, fixed: false}
+  to_end: {x: 444.6, y: 415.44, fixed: false}
+  clear: {x: 577.56, y: 344.38, fixed: false}
+  fail: {x: 313.28, y: 330.17}
+  done: {x: 520, y: 190}

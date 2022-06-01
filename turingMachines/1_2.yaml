@@ -1,0 +1,16 @@
+name: unary multiplication
+source code: "# 1.2) Умножение двух унарных чисел\r\ninput: '11*11'\r\nblank: ' '\r\nstart state: put_eq\r\ntable:\r\n  # поставить в конец знак равенства\r\n  put_eq: \r\n    [1, '*']: R\r\n    ' ': {write: =, L: left}\r\n  # движение влево\r\n  left:\r\n    [1, '*']: L\r\n    ' ': {R: start_mul}\r\n  # начать умножение\r\n  start_mul:\r\n    1: {write: a, R: to_second}\r\n    a: R\r\n    '*': {L: to_left_end}\r\n  # движение ко второму множителю\r\n  to_second:\r\n    1: R\r\n    '*': {R: second}\r\n  # обработка второго множителя\r\n  second:\r\n    a: R\r\n    1: {write: a, R: carry_to_answer}\r\n    =: {L: restore_second}\r\n  # перенос единицы в ответ\r\n  carry_to_answer:\r\n    [1, =]: R\r\n    ' ': {write: 1, L: back_to_second}\r\n  #возврат ко второму множителю\r\n  back_to_second:\r\n    [1, =]: L\r\n    a: {R: second}\r\n  # восстановить второй множитель (обработка закончена)\r\n  restore_second:\r\n    a: {write: 1, L}\r\n    '*': {L: to_first}\r\n  # перейти к необработанному разряду\r\n  to_first:\r\n    1: L\r\n    a: {R: start_mul}\r\n  # к левому краю\r\n  to_left_end:\r\n    a: L\r\n    ' ': {R: del_all}\r\n  # очистить входные данные\r\n  del_all:\r\n    [1, '*', a]: {write: ' ', R: del_all}\r\n    =: {write: ' ', R: done}\r\n  done:"
+positions:
+  put_eq: {x: 281.23, y: 20, fixed: false}
+  left: {x: 206.43, y: 141.04, fixed: false}
+  start_mul: {x: 346.4, y: 183.35, fixed: false}
+  to_second: {x: 483.53, y: 224.65}
+  second: {x: 414.32, y: 350.73, fixed: false}
+  carry_to_answer: {x: 319.55, y: 467.69, fixed: false}
+  back_to_second: {x: 259.42, y: 341.58, fixed: false}
+  restore_second: {x: 439.01, y: 478.77, fixed: false}
+  to_first: {x: 357.67, y: 337.25, fixed: false}
+  to_left_end: {x: 456.17, y: 81.41, fixed: false}
+  del_all: {x: 599.3, y: 114.55, fixed: false}
+  done: {x: 605.95, y: 268.88}
+editor contents: "input: '11*11'\r\nblank: ' '\r\nstart state: put_eq\r\ntable:\r\n  # поставить в конец знак равенства\r\n  put_eq: \r\n    [1, '*']: R\r\n    ' ': {write: =, L: left}\r\n  # движение влево\r\n  left:\r\n    [1, '*']: L\r\n    ' ': {R: start_mul}\r\n  # начать умножение\r\n  start_mul:\r\n    1: {write: a, R: to_second}\r\n    a: R\r\n    '*': {L: to_left_end}\r\n  # движение ко второму множителю\r\n  to_second:\r\n    1: R\r\n    '*': {R: second}\r\n  # обработка второго множителя\r\n  second:\r\n    a: R\r\n    1: {write: a, R: carry_to_answer}\r\n    =: {L: restore_second}\r\n  # перенос единицы в ответ\r\n  carry_to_answer:\r\n    [1, =]: R\r\n    ' ': {write: 1, L: back_to_second}\r\n  #возврат ко второму множителю\r\n  back_to_second:\r\n    [1, =]: L\r\n    a: {R: second}\r\n  # восстановить второй множитель (обработка закончена)\r\n  restore_second:\r\n    a: {write: 1, L}\r\n    '*': {L: to_first}\r\n  # перейти к необработанному разряду\r\n  to_first:\r\n    1: L\r\n    a: {R: start_mul}\r\n  # к левому краю\r\n  to_left_end:\r\n    a: L\r\n    ' ': {R: del_all}\r\n  # очистить входные данные\r\n  del_all:\r\n    [1, '*', a]: {write: ' ', R: del_all}\r\n    =: {write: ' ', R: done}\r\n  done:"

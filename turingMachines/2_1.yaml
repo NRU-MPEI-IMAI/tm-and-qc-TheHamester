@@ -1,0 +1,11 @@
+name: Zero One Two Equal
+source code: "input: '0010122'\r\nblank: ' '\r\nstart state: consume_0\r\ntable:\r\n\r\n  consume_0:\r\n    ' ': {L: success}\r\n    0: {write: a, R: consume_1}\r\n    [1, 2]: {R: fail}\r\n    a: R\r\n\r\n  consume_1:\r\n    [0, a]: R\r\n    1: {write: a, R: consume_2}\r\n    [2, ' ']: {L: fail}\r\n\r\n  consume_2:\r\n    [1, a]: R\r\n    2: {write: a, L: back_to_start}\r\n    [0,' ']: {L: fail}\r\n\r\n  back_to_start:\r\n    [a, 2, 1, 0]: L\r\n    ' ': {R: consume_0}\r\n\r\n  success:\r\n    a: {write: ' ', L}\r\n    ' ': {write: s, R: done}\r\n\r\n  fail:\r\n    [a, 0, 1, 2]: R\r\n    ' ': {L: del}\r\n\r\n  del:\r\n    [a, 0, 1, 2]: {write: ' ', L}\r\n    ' ': {write: f, R: done}\r\n  done:\r\n    ' ': L"
+positions:
+  consume_0: {x: 406.1, y: 238.6, fixed: false}
+  consume_1: {x: 265.74, y: 196.7, fixed: false}
+  consume_2: {x: 190.44, y: 324.27, fixed: false}
+  back_to_start: {x: 342.16, y: 389.25}
+  success: {x: 420.76, y: 91.84, fixed: false}
+  fail: {x: 313.28, y: 330.17}
+  del: {x: 546.75, y: 406.75}
+  done: {x: 520, y: 190}
